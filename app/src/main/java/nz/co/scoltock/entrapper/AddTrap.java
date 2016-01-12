@@ -1,6 +1,8 @@
 package nz.co.scoltock.entrapper;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -8,22 +10,53 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.Button;
 
 
 public class AddTrap extends ActionBarActivity {
+
+
+    private Button addTrap = null;
+    private EditText trapName = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_trap);
 
+        addTrap = (Button) findViewById(R.id.storeTrap);
+        trapName = (EditText) findViewById(R.id.trap_name);
+
          /* Use the LocationManager class to obtain GPS locations */
-        LocationManager locManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        LocationManager locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         LocationListener locListener = new MyLocationListener();
-        locManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 0, 0, locListener);
+        locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locListener);
+
+
+        addTrap.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                saveTrap(v);
+            }});
     }
 
+    private void saveTrap(View v) {
+        TrapDbHelper mDbHelper = new TrapDbHelper(v.getContext());
+
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+    // Create a new map of values, where column names are the keys
+        ContentValues values = new ContentValues();
+        values.put(TrapContract.Trap.COLUMN_NAME_CODE, trapName.getText().toString());
+
+    // Insert the new row, returning the primary key value of the new row
+        long newRowId;
+        newRowId = db.insert(
+                TrapContract.Trap.TABLE_NAME,
+                TrapContract.Trap.COLUMN_NAME_CODE,
+                values);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

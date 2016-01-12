@@ -6,16 +6,44 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="nz.co.scoltock.entrapper.AddTrap">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Location "
+        android:id="@+id/labelLocation" />
+
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/location"
-        android:layout_marginTop="40dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/labelLocation"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name "
+        android:layout_below="@+id/location"
+        android:id="@+id/labelTrapName"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/trap_name"
+        android:layout_below="@+id/labelTrapName"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Store Trap"
+        android:id="@+id/storeTrap"
+        android:layout_below="@+id/trap_name"
+        android:layout_toRightOf="@+id/trap_name"
+        android:layout_toEndOf="@+id/trap_name"
+        android:layout_marginTop="70dp" />
 
 
 </RelativeLayout>
